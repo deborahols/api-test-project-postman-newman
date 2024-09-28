@@ -1,0 +1,295 @@
+{
+	"info": {
+		"_postman_id": "38155f1b-e103-47ed-af05-916898e2f6b8",
+		"name": "Contract-tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19138163"
+	},
+	"item": [
+		{
+			"name": "Get All Products",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const schema = {\r",
+							"  \"type\": \"object\",\r",
+							"  \"properties\": {\r",
+							"    \"quantidade\": {\r",
+							"      \"type\": \"integer\"\r",
+							"    },\r",
+							"    \"produtos\": {\r",
+							"      \"type\": \"array\",\r",
+							"      \"items\": [\r",
+							"        {\r",
+							"          \"type\": \"object\",\r",
+							"          \"properties\": {\r",
+							"            \"nome\": {\r",
+							"              \"type\": \"string\"\r",
+							"            },\r",
+							"            \"preco\": {\r",
+							"              \"type\": \"integer\"\r",
+							"            },\r",
+							"            \"descricao\": {\r",
+							"              \"type\": \"string\"\r",
+							"            },\r",
+							"            \"quantidade\": {\r",
+							"              \"type\": \"integer\"\r",
+							"            },\r",
+							"            \"_id\": {\r",
+							"              \"type\": \"string\"\r",
+							"            }\r",
+							"          },\r",
+							"          \"required\": [\r",
+							"            \"nome\",\r",
+							"            \"preco\",\r",
+							"            \"descricao\",\r",
+							"            \"quantidade\",\r",
+							"            \"_id\"\r",
+							"          ]\r",
+							"        },\r",
+							"        {\r",
+							"          \"type\": \"object\",\r",
+							"          \"properties\": {\r",
+							"            \"nome\": {\r",
+							"              \"type\": \"string\"\r",
+							"            },\r",
+							"            \"preco\": {\r",
+							"              \"type\": \"integer\"\r",
+							"            },\r",
+							"            \"descricao\": {\r",
+							"              \"type\": \"string\"\r",
+							"            },\r",
+							"            \"quantidade\": {\r",
+							"              \"type\": \"integer\"\r",
+							"            },\r",
+							"            \"_id\": {\r",
+							"              \"type\": \"string\"\r",
+							"            }\r",
+							"          },\r",
+							"          \"required\": [\r",
+							"            \"nome\",\r",
+							"            \"preco\",\r",
+							"            \"descricao\",\r",
+							"            \"quantidade\",\r",
+							"            \"_id\"\r",
+							"          ]\r",
+							"        },\r",
+							"        {\r",
+							"          \"type\": \"object\",\r",
+							"          \"properties\": {\r",
+							"            \"nome\": {\r",
+							"              \"type\": \"string\"\r",
+							"            },\r",
+							"            \"preco\": {\r",
+							"              \"type\": \"integer\"\r",
+							"            },\r",
+							"            \"descricao\": {\r",
+							"              \"type\": \"string\"\r",
+							"            },\r",
+							"            \"quantidade\": {\r",
+							"              \"type\": \"integer\"\r",
+							"            },\r",
+							"            \"_id\": {\r",
+							"              \"type\": \"string\"\r",
+							"            }\r",
+							"          },\r",
+							"          \"required\": [\r",
+							"            \"nome\",\r",
+							"            \"preco\",\r",
+							"            \"descricao\",\r",
+							"            \"quantidade\",\r",
+							"            \"_id\"\r",
+							"          ]\r",
+							"        },\r",
+							"        {\r",
+							"          \"type\": \"object\",\r",
+							"          \"properties\": {\r",
+							"            \"nome\": {\r",
+							"              \"type\": \"string\"\r",
+							"            },\r",
+							"            \"preco\": {\r",
+							"              \"type\": \"integer\"\r",
+							"            },\r",
+							"            \"descricao\": {\r",
+							"              \"type\": \"string\"\r",
+							"            },\r",
+							"            \"quantidade\": {\r",
+							"              \"type\": \"integer\"\r",
+							"            },\r",
+							"            \"_id\": {\r",
+							"              \"type\": \"string\"\r",
+							"            }\r",
+							"          },\r",
+							"          \"required\": [\r",
+							"            \"nome\",\r",
+							"            \"preco\",\r",
+							"            \"descricao\",\r",
+							"            \"quantidade\",\r",
+							"            \"_id\"\r",
+							"          ]\r",
+							"        }\r",
+							"      ]\r",
+							"    }\r",
+							"  },\r",
+							"  \"required\": [\r",
+							"    \"quantidade\",\r",
+							"    \"produtos\"\r",
+							"  ]\r",
+							"}\r",
+							"pm.environment.set(\"envSchema\", schema)"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const schema = pm.environment.get(\"envSchema\")\r",
+							"const Ajv = require(\"ajv\")\r",
+							"const ajv = new Ajv()\r",
+							"\r",
+							"const jsonData = pm.response.json()\r",
+							"\r",
+							"pm.test(\"Validar schema\", () => {\r",
+							"    const validate = ajv.compile(schema)\r",
+							"    const valid = validate(jsonData)\r",
+							"    pm.expect(valid, \"schema valido\").to.be.true\r",
+							"})\r",
+							"pm.environment.set(\"idProduto\",jsonData.produtos[0]._id)"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/produtos",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"produtos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get id",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const schema = {\r",
+							"  \"type\": \"object\",\r",
+							"  \"properties\": {\r",
+							"    \"nome\": {\r",
+							"      \"type\": \"string\"\r",
+							"    },\r",
+							"    \"preco\": {\r",
+							"      \"type\": \"integer\"\r",
+							"    },\r",
+							"    \"descricao\": {\r",
+							"      \"type\": \"string\"\r",
+							"    },\r",
+							"    \"quantidade\": {\r",
+							"      \"type\": \"integer\"\r",
+							"    },\r",
+							"    \"_id\": {\r",
+							"      \"type\": \"string\"\r",
+							"    }\r",
+							"  },\r",
+							"  \"required\": [\r",
+							"    \"nome\",\r",
+							"    \"preco\",\r",
+							"    \"descricao\",\r",
+							"    \"quantidade\",\r",
+							"    \"_id\"\r",
+							"  ]\r",
+							"}\r",
+							"pm.environment.set(\"envSchema\", schema)"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const schema = pm.environment.get(\"envSchema\")\r",
+							"const Ajv = require(\"ajv\")\r",
+							"const ajv = new Ajv()\r",
+							"\r",
+							"const jsonData = pm.response.json()\r",
+							"\r",
+							"pm.test(\"Validar schema\", () => {\r",
+							"    const validate = ajv.compile(schema)\r",
+							"    const valid = validate(jsonData)\r",
+							"    pm.expect(valid, \"schema valido\").to.be.true\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Validar schema\", () => {\r",
+							"    pm.response.to.have.status(200)\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/produtos/{{idProduto}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"produtos",
+						"{{idProduto}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "http://localhost:3000",
+			"type": "string"
+		}
+	]
+}

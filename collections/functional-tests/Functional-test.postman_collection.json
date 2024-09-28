@@ -122,7 +122,7 @@
 			"response": []
 		},
 		{
-			"name": "New Request",
+			"name": "Editar usuario",
 			"event": [
 				{
 					"listen": "test",
@@ -168,7 +168,7 @@
 			"response": []
 		},
 		{
-			"name": "New Request",
+			"name": "Excluir usuario",
 			"event": [
 				{
 					"listen": "test",
